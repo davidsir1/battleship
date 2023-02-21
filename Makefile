@@ -2,27 +2,24 @@ CXX=g++
 CXXFLAGS=-g -Wall
 COMPILE=$(CXX) $(CXXFLAGS)
 
-OBJS=main.o grid.o player.o game.o
+all: build battleship
 
-all: battleship
+battleship: src/main.cpp out/grid.o out/player.o out/game.o
+	$(COMPILE) $< out/*.o -o $@
 
-battleship: $(OBJS)
-	$(COMPILE) out/*.o -o $@
+out/grid.o: src/grid.cpp src/grid.hpp out
+	$(COMPILE) -c $< -o $@
 
-main.o: src/main.cpp
-	$(COMPILE) -c src/main.cpp -o out/$@
+out/player.o: src/player.cpp src/player.hpp out
+	$(COMPILE) -c $< -o $@
 
-grid.o: src/grid.cpp
-	$(COMPILE) -c src/grid.cpp -o out/$@
+out/game.o: src/game.cpp src/game.hpp out
+	$(COMPILE) -c $< -o $@
 
-player.o: src/player.cpp
-	$(COMPILE) -c src/player.cpp -o out/$@
-
-game.o: src/game.cpp
-	$(COMPILE) -c src/game.cpp -o out/$@
+build:
+	mkdir -p out
 
 clean:
 	rm -rf out battleship
 
-build:
-	mkdir -p out/
+.PHONY: build clean
