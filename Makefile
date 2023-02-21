@@ -20,5 +20,5 @@ game.o: src/game.cpp
 	$(COMPILE) -c src/game.cpp -o out/$@
 
 clean:
-	rm *.o battleship
+	rm -rf out/*.o battleship
 
