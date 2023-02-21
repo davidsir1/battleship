@@ -1,27 +1,24 @@
-COMPILER=g++
-OPTIONS=-g -Wall
-COMPILE=$(COMPILER) $(OPTIONS)
-SOURCE=src
-BUILD=out
+CXX=g++
+CXXFLAGS=-g -Wall
+COMPILE=$(CXX) $(CXXFLAGS)
 
-all: battleship
+OBJS=main.o grid.o player.o game.o
 
-battleship: $(SOURCE)/main.cpp $(BUILD)/*.o
-	$(COMPILE) $< $(BUILD)/*.o -o $@
+battleship: $(OBJS)
+	$(COMPILE) out/*.o -o $@
 
-$(BUILD)/grid.o: $(SOURCE)/grid.cpp $(SOURCE)/grid.hpp out
-	$(COMPILE) -c $<
+main.o: src/main.cpp
+	$(COMPILE) -c src/main.cpp -o out/$@
 
-$(BUILD)/game.o: $(SOURCE)/game.cpp $(SOURCE)/game.hpp out
-	$(COMPILE) -c $<
+grid.o: src/grid.cpp
+	$(COMPILE) -c src/grid.cpp -o out/$@
 
-$(BUILD)/player.o: $(SOURCE)/player.cpp $(SOURCE)/player.hpp out
-	$(COMPILE) -c $<
+player.o: src/player.cpp
+	$(COMPILE) -c src/player.cpp -o out/$@
 
-build:
-	mkdir -p $(BUILD)
+game.o: src/game.cpp
+	$(COMPILE) -c src/game.cpp -o out/$@
 
 clean:
-	rm -rf $(BUILD) battleship
+	rm *.o battleship
 
-.PHONY: clean build
