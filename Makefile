@@ -4,6 +4,8 @@ COMPILE=$(CXX) $(CXXFLAGS)
 
 OBJS=main.o grid.o player.o game.o
 
+all: battleship
+
 battleship: $(OBJS)
 	$(COMPILE) out/*.o -o $@
 
@@ -20,5 +22,7 @@ game.o: src/game.cpp
 	$(COMPILE) -c src/game.cpp -o out/$@
 
 clean:
-	rm -rf out/*.o battleship
+	rm -rf out battleship
 
+build:
+	mkdir -p out/
