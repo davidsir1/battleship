@@ -9,27 +9,38 @@ void Grid::fillGrid(std::array<std::array<int, width>, height>& grid){
 }
 
 void Grid::printGrid(std::array<std::array<int, width>, height>& grid, std::array<std::array<int, width>, height>& grid2){
-	std::cout << std::setw(3);
+	std::cout << std::setw(4);
 	for(int i = 65; i<75; i++){
     	std::cout << char(i) << ' ';
 	}
-	std::cout << std::setw(5);
+	std::cout << std::setw(6);
 	for(int i = 65; i<75; i++){
 		std::cout << char(i) << ' ';
 	}
 	std::cout << '\n';
-	for(int i = 0; i<height; i++){
-	    std::cout << i+1 << '|';
+	for(int i = 0; i<height-1; i++){
+	    std::cout << i+1 << " |";
 	    for(int j = 0; j<width; j++){
 	        std::cout << printBlock(grid[i][j]) << ' ';
 	    }
 	    std::cout << "  ";
-	    std::cout << i+1 << '|';
+	    std::cout << i+1 << " |";
 	    for(int j = 0; j<width; j++){
 	        std::cout << printBlock(grid2[i][j], 0) << ' ';
 	    }
 	    std::cout << '\n';
 	}
+	std::cout << "10|";
+	for(int j = 0; j<width; j++){
+	    std::cout << printBlock(grid[9][j]) << ' ';
+	}
+	std::cout << "  ";
+	std::cout << "10|";
+	for(int j = 0; j<width; j++){
+		std::cout << printBlock(grid2[9][j], 0) << ' ';
+	}
+	std::cout << '\n';
+
 }
 
 char Grid::printBlock(const int block, bool show){
@@ -78,8 +89,7 @@ void Grid::positionShips(std::array<std::array<int, width>, height> &grid){
 }
 
 bool Grid::verifyPosition(std::array<std::array<int, width>, height> &grid, const int x, const int y, int size, bool side){
-	if(x<0 || y<0 || 
-	  (side ? y+size : x+size) > (side ? width : height)){
+	if((side ? y+size : x+size) > (side ? width : height)){
 		return false;
 	}
 	bool isFree = true;
@@ -108,7 +118,7 @@ bool Grid::checkBorders(std::array<std::array<int, width>, height>& grid, const 
 			}
 		}
 	}
-
+	
    	return false;
 }
 

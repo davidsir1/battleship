@@ -11,32 +11,36 @@ int Game::OnStart(){
 		switch(playerTurn) {
 			case 1:
 				std::cout << "Vez do Jogador 1\n";
-				std::cout << "Faça o ataque (Linha, Coluna): ";
+				std::cout << "Faça o ataque (Número, Letra): ";
 				std::cin >> x >> y;
-				if((x > 0 && x < height) && (y > 0 && y < width)){
-					p->playerAttack(gridPlayer2, x-1, y-1);
-					if(p->isHitTheShip(gridPlayer2, x-1, y-1)){
-						std::cout << "Jogador 1 acertou um barco\n";
+				x-=1; y-=1;
+				if(!((x > -1 && x < height) && (y > -1 && y < width))){
+					std::cout << "Escolha uma posição de 1 à 10 e A ao J!\n";
+				}else{
+					if(p->isHitTheShip(gridPlayer2, x, y)){
+						std::cout << "Jogador 1 acertou um barco.\n"
+							<< "Jogador 1 joga denovo.\n";
 						cellsP2--;
 					}else{
-						std::cout << "Jogador 1 acertou na água\n";
+						std::cout << "Jogador 1 acertou na água.\n";
 						playerTurn++;
 					}
+					p->playerAttack(gridPlayer2, x, y);
 				}
+				sleep(2);
 				break;
 			case 2:
-				std::cout << "Vez do Jogador 2\n";
+				std::cout << "Vez do Jogador 2.\n";
 				x = randomInteger(0, 9); y = randomInteger(0, 9);
-				if((x > 0 && x < height) && (y > 0 && y < width)){
-					p->playerAttack(gridPlayer, x-1, y-1);
-					if(p->isHitTheShip(gridPlayer, x-1, y-1)){
-						std::cout << "Jogador 2 acertou um barco\n";
+				sleep(2);
+					if(p->isHitTheShip(gridPlayer, x, y)){
+						std::cout << "Jogador 2 acertou um barco.\n";
 						cellsP1--;
 					}else{
-						std::cout << "Jogador 2 acertou na água\n";
+						std::cout << "Jogador 2 acertou na água.\n";
 						playerTurn--;
 					}
-				}
+				p->playerAttack(gridPlayer, x, y);
 				sleep(2);
 				break;
 		}
